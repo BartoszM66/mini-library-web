@@ -1,0 +1,47 @@
+<div class="container mt-5">
+    <h1 class="text-center mb-4">📚 Moja Mini Biblioteka</h1>
+
+    <div class="card mb-4 shadow-sm border-success">
+        <div class="card-header bg-success text-white">Dodaj Nowego Autora</div>
+        <div class="card-body">
+            <form action="/add-author" method="post">
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="text" name="firstName" class="form-control" placeholder="Imię" required>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="lastName" class="form-control" placeholder="Nazwisko" required>
+                    </div>
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn btn-success">Dodaj Autora</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4" th:each="author : ${authorsList}">
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-primary" th:text="${author.firstName + ' ' + author.lastName}">Imię Nazwisko</h5>
+                    <hr>
+                    <h6 class="card-subtitle mb-2 text-muted">Napisane książki:</h6>
+
+                    <ul class="flex-grow-1">
+                        <li th:each="book : ${author.books}" th:text="${book.title}">Tytuł Książki</li>
+                    </ul>
+
+                    <form action="/add-book" method="post" class="mt-3">
+                        <input type="hidden" name="authorId" th:value="${author.id}">
+                        <div class="input-group input-group-sm">
+                            <input type="text" name="title" class="form-control" placeholder="Nowa książka..." required>
+                            <button type="submit" class="btn btn-outline-primary">Dodaj</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
